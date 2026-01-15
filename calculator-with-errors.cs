@@ -4,54 +4,56 @@ namespace CalculatorApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            double a = 0;
-            double b = 0;
-            string operation = "";
-
-            Console.WriteLine("Введите первое число:");
-            a = Convert.ToDouble(Console.ReadLine());
-
-            Console.WriteLine("Введите второе число:");
-            b = Convert.ToDouble(Console.ReadLine());
-
-            Console.WriteLine("Введите операцию (+, -, *, /):");
-            operation = Console.ReadLine();
-
-            double result = 0;
-
-            if (operation == "+")
+            Console.Write("Введите первое число: ");
+            if (!double.TryParse(Console.ReadLine(), out double a))
             {
-                result = a + b;
+                Console.WriteLine("Ошибка ввода числа");
+                return;
             }
-            else if (operation == "-")
+
+            Console.Write("Введите второе число: ");
+            if (!double.TryParse(Console.ReadLine(), out double b))
             {
-                result = a - b;
+                Console.WriteLine("Ошибка ввода числа");
+                return;
             }
-            else if (operation == "*")
+
+            Console.Write("Введите операцию (+, -, *, /): ");
+            string operation = Console.ReadLine();
+
+            double result;
+
+            switch (operation)
             {
-                result = a * b;
-            }
-            else if (operation == "/")
-            {
-                if (b != 0)
-                {
+                case "+":
+                    result = a + b;
+                    break;
+
+                case "-":
+                    result = a - b;
+                    break;
+
+                case "*":
+                    result = a * b;
+                    break;
+
+                case "/":
+                    if (b == 0)
+                    {
+                        Console.WriteLine("Деление на ноль невозможно");
+                        return;
+                    }
                     result = a / b;
-                }
-                else
-                {
-                    Console.WriteLine("Деление на ноль!");
-                    result = 0;
-                }
-            }
-            else
-            {
-                Console.WriteLine("Неизвестная операция");
+                    break;
+
+                default:
+                    Console.WriteLine("Неизвестная операция");
+                    return;
             }
 
-            Console.WriteLine("Результат: " + result);
-            Console.ReadLine();
+            Console.WriteLine($"Результат: {result}");
         }
     }
 }
